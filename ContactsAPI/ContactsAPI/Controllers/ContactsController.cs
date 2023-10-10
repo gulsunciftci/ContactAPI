@@ -17,13 +17,13 @@ namespace ContactsAPI.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetContacts()
+		public async Task<IActionResult> GetContacts() //listeleme
 		{
 			return Ok(await _dbContext.Contacts.ToListAsync());
 		}
 
 		[HttpGet("{id}")]
-		public async Task<IActionResult> GetContact( [FromRoute]int id)
+		public async Task<IActionResult> GetContact( [FromRoute]int id) //id'ye göre listeleme
 		{
 			var contact = await _dbContext.Contacts.FindAsync(id);
 			if (contact == null)
@@ -36,7 +36,7 @@ namespace ContactsAPI.Controllers
 
 
 		[HttpPost]
-		public async Task<IActionResult> AddContact([FromBody] AddContextRequest addContextRequest)
+		public async Task<IActionResult> AddContact([FromBody] AddContextRequest addContextRequest)  //ekleme
 		{
 			var contact = new Contact()
 			{
@@ -54,7 +54,7 @@ namespace ContactsAPI.Controllers
 
 		[HttpPut("{id}")]
 
-		public async Task<IActionResult> UpdateContact(int id, UpdateContextRequest updateContextRequest)
+		public async Task<IActionResult> UpdateContact(int id, UpdateContextRequest updateContextRequest) //id'ye göre güncelleme
 		{
 			var contact = await _dbContext.Contacts.FindAsync(id);
 
@@ -75,7 +75,7 @@ namespace ContactsAPI.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public async Task<IActionResult> DeleteContact(int id)
+		public async Task<IActionResult> DeleteContact(int id) //id'ye göre silme
 		{
 			var contact = await _dbContext.Contacts.FindAsync(id);
 

@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 //	options => options.UseInMemoryDatabase("ContactsDb"));
 
 builder.Services.AddDbContext<ContactsAPIDbContext>(
-	options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+	options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //database string ekleme
 
 
 
