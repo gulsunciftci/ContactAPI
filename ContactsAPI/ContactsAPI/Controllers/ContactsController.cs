@@ -23,6 +23,13 @@ namespace ContactsAPI.Controllers
 		}
 
 		[HttpGet("{id}")]
+		public async Task<IActionResult> GetContactCategory(int id) //id'si verilen Contact'ın categorysinin listelenmesi
+		{
+			var contact = await _dbContext.Contacts.Where(x=>x.Id==id).Include("Category").Select(x=>x.Category.CategoryName).FirstOrDefaultAsync();
+			return Ok(contact);
+		}
+
+		[HttpGet("{id}")]
 		public async Task<IActionResult> GetContact( [FromRoute]int id) //id'ye göre listeleme
 		{
 			var contact = await _dbContext.Contacts.FindAsync(id);
@@ -36,7 +43,7 @@ namespace ContactsAPI.Controllers
 
 
 		[HttpPost]
-		public async Task<IActionResult> AddContact([FromBody] AddContextRequest addContextRequest)  //ekleme
+		public async Task<IActionResult> AddContact([FromBody] AddContactContextRequest addContextRequest)  //ekleme
 		{
 			var contact = new Contact()
 			{
@@ -54,7 +61,7 @@ namespace ContactsAPI.Controllers
 
 		[HttpPut("{id}")]
 
-		public async Task<IActionResult> UpdateContact(int id, UpdateContextRequest updateContextRequest) //id'ye göre güncelleme
+		public async Task<IActionResult> UpdateContact(int id, UpdateContactContextRequest updateContextRequest) //id'ye göre güncelleme
 		{
 			var contact = await _dbContext.Contacts.FindAsync(id);
 

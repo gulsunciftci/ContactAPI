@@ -21,6 +21,23 @@ namespace ContactsAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ContactsAPI.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("ContactsAPI.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +49,9 @@ namespace ContactsAPI.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -46,7 +66,25 @@ namespace ContactsAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("Contacts");
+                });
+
+            modelBuilder.Entity("ContactsAPI.Models.Contact", b =>
+                {
+                    b.HasOne("ContactsAPI.Models.Category", "Category")
+                        .WithMany("Contacts")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ContactsAPI.Models.Category", b =>
+                {
+                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }

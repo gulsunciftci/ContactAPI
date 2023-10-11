@@ -1,6 +1,6 @@
 ﻿namespace ContactsAPI.Models
 {
-	public class UpdateContextRequest
+	public class UpdateContactContextRequest
 	{
 		public string FullName { get; set; }
 		public string Email { get; set; }
