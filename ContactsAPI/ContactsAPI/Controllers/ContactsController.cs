@@ -29,8 +29,23 @@ namespace ContactsAPI.Controllers
 			return Ok(contact);
 		}
 
+		[HttpGet]
+		public async Task<IActionResult> OrderDescId() //id'ye göre tersten sıralama
+		{
+			var contact = await _dbContext.Contacts.OrderByDescending(x=>x.Id).ToListAsync();
+			return Ok(contact);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> OrderName() 
+		{
+			var contact = await _dbContext.Contacts.OrderBy(x => x.FullName).ToListAsync();
+			return Ok(contact);
+		}
+
+
 		[HttpGet("{id}")]
-		public async Task<IActionResult> GetContact( [FromRoute]int id) //id'ye göre listeleme
+		public async Task<IActionResult> GetContact( [FromRoute]int id) //id'si verileni listeleme
 		{
 			var contact = await _dbContext.Contacts.FindAsync(id);
 			if (contact == null)
@@ -40,7 +55,6 @@ namespace ContactsAPI.Controllers
 
 			return Ok(contact);
 		}
-
 
 		[HttpPost]
 		public async Task<IActionResult> AddContact([FromBody] AddContactContextRequest addContextRequest)  //ekleme
